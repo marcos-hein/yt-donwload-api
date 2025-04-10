@@ -19,7 +19,3 @@ def baixar(req: VideoRequest, background_tasks: BackgroundTasks):
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/")
-def read_root():
-    return {"message": "API de download de vídeos do YouTube."}
