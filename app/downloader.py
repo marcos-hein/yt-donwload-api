@@ -7,11 +7,20 @@ def baixar_video_yt(url: str):
     video_id = str(uuid.uuid4())
     output_template = os.path.join(DOWNLOAD_DIR, f"{video_id}-%(title)s.%(ext)s")
 
+    # Salva os cookies num arquivo temporário
+    cookie_text = os.environ.get("YT_COOKIES")
+    cookie_path = "cookies.txt"
+
+    if cookie_text:
+        with open(cookie_path, "w", encoding="utf-8") as f:
+            f.write(cookie_text)
+
     ydl_opts = {
         'format': 'bestvideo[height=1080][fps<=30][vcodec*=avc1][ext=mp4]+bestaudio[acodec*=mp4a][ext=m4a]/best[ext=mp4]',
         'merge_output_format': 'mp4',
         'outtmpl': output_template,
         'quiet': True,
+        'cookiefile': cookie_path,
         'noplaylist': True
     }
 
